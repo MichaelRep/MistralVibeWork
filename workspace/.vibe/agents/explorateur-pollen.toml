@@ -1,0 +1,9 @@
+# Subagent de l'orchestrateur. Lit node_modules et le projet de référence, écrit uniquement le catalogue Pollen. Ne délègue pas.
+agent_type       = "subagent"
+display_name     = "Explorateur Pollen"
+description      = "[Subagent de l'orchestrateur] Recherche dans node_modules et dans le projet de référence comment utiliser des composants Pollen donnés (sélecteur, import, inputs, outputs, exemples sourcés) et complète le catalogue outil-recette-webapp/docs/pollen/catalogue.md."
+safety           = "safe"
+active_model     = "mistral-medium-3.5"
+system_prompt_id = "explorateur-pollen"
+enabled_tools    = ["read_file", "grep", "write_file", "edit", "skill"]
+enabled_skills   = ["protocole-orchestration", "cataloguer-pollen"]

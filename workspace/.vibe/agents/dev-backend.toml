@@ -1,0 +1,16 @@
+# Subagent de l'orchestrateur. Ne délègue pas.
+agent_type       = "subagent"
+display_name     = "Dev backend"
+description      = "[Subagent de l'orchestrateur] Implémente une étape du plan dans outil-recette-api en architecture hexagonale (domaine, ports, adapters) avec ses tests, jusqu'à mvn verify vert."
+safety           = "neutral"
+active_model     = "mistral-medium-3.5"
+system_prompt_id = "dev-backend"
+enabled_tools    = ["read_file", "grep", "write_file", "edit", "bash", "skill", "todo"]
+enabled_skills   = ["protocole-orchestration", "structurer-module-hexagonal", "migrer-servlet-vers-rest", "migrer-acces-donnees", "atteindre-couverture-100"]
+
+[tools.bash]
+permission = "never"
+allowlist  = [
+  "mvn -f outil-recette-api/pom.xml test", "mvn -f outil-recette-api/pom.xml verify", "mvn -f outil-recette-api/pom.xml -q",
+  "git -C outil-recette-api status", "git -C outil-recette-api diff",
+]

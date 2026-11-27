@@ -1,0 +1,17 @@
+# Subagent de l'orchestrateur. Ne délègue pas.
+agent_type       = "subagent"
+display_name     = "QA parité"
+description      = "[Subagent de l'orchestrateur] Écrit les tests de caractérisation du legacy Outil-recette (mode capture) ou rejoue la parité sur outil-recette-api et produit le rapport d'écarts (mode rejeu)."
+safety           = "neutral"
+active_model     = "mistral-large-4-0"
+system_prompt_id = "qa-parite"
+enabled_tools    = ["read_file", "grep", "write_file", "edit", "bash", "skill", "todo"]
+enabled_skills   = ["protocole-orchestration", "ecrire-test-caracterisation", "checklist-migration"]
+
+[tools.bash]
+permission = "never"
+allowlist  = [
+  "mvn -f outil-recette-api/pom.xml test", "mvn -f outil-recette-api/pom.xml verify",
+  "git -C outil-recette-api status", "git -C outil-recette-api diff",
+  "curl -s http://localhost", "curl --silent http://localhost",
+]

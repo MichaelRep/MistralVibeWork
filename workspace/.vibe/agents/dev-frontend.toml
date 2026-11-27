@@ -1,0 +1,16 @@
+# Subagent de l'orchestrateur. Ne délègue pas.
+agent_type       = "subagent"
+display_name     = "Dev frontend"
+description      = "[Subagent de l'orchestrateur] Migre un écran JSP vers un composant Angular 22 basé sur Pollen dans outil-recette-webapp, avec ses tests, jusqu'à tests et build verts."
+safety           = "neutral"
+active_model     = "mistral-medium-3.5"
+system_prompt_id = "dev-frontend"
+enabled_tools    = ["read_file", "grep", "write_file", "edit", "bash", "skill", "todo"]
+enabled_skills   = ["protocole-orchestration", "migrer-ecran-jsp"]
+
+[tools.bash]
+permission = "never"
+allowlist  = [
+  "npm --prefix outil-recette-webapp test", "npm --prefix outil-recette-webapp run",
+  "git -C outil-recette-webapp status", "git -C outil-recette-webapp diff",
+]

@@ -1,0 +1,9 @@
+# Subagent de l'orchestrateur. Ne délègue pas (Vibe : un subagent ne lance pas de subagent).
+agent_type       = "subagent"
+display_name     = "Analyste fonctionnel"
+description      = "[Subagent de l'orchestrateur] Fusionne les cartographies partielles d'un module legacy et rédige ou met à jour la spec fonctionnelle (règles RG-xxx sourcées, cas d'usage, questions ouvertes), en intégrant les réponses de l'équipe transmises dans le brief."
+safety           = "safe"
+active_model     = "mistral-large-4-0"
+system_prompt_id = "analyste-fonctionnel"
+enabled_tools    = ["read_file", "grep", "write_file", "edit", "skill", "todo"]
+enabled_skills   = ["protocole-orchestration", "cartographier-module-legacy", "extraire-regles-metier"]

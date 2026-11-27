@@ -1,0 +1,9 @@
+# Subagent de l'orchestrateur. Lit le legacy, écrit uniquement sa cartographie partielle. Ne délègue pas.
+agent_type       = "subagent"
+display_name     = "Archéologue legacy"
+description      = "[Subagent de l'orchestrateur] Explore une partie d'un module du repo legacy Outil-recette (servlets, JSP, DAO, SQL) et écrit une cartographie partielle structurée, avec références fichier:ligne, dans outil-recette-api/docs/legacy/<module>/<partie>.md."
+safety           = "safe"
+active_model     = "mistral-large-4-0"
+system_prompt_id = "archeologue"
+enabled_tools    = ["read_file", "grep", "write_file", "skill"]
+enabled_skills   = ["protocole-orchestration", "cartographier-module-legacy", "extraire-regles-metier"]

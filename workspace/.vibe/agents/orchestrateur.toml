@@ -1,0 +1,11 @@
+# Seul agent à lancer : `vibe` (agent par défaut) ou `vibe --agent orchestrateur`.
+# Il délègue directement à tous les subagents (Vibe ne permet qu'un niveau de délégation),
+# porte les boucles via les skills piloter-*, tient le fichier d'état et pose toutes les questions.
+agent_type       = "agent"
+display_name     = "Orchestrateur de migration"
+description      = "Point d'entrée unique : pilote une tranche de migration de bout en bout en déléguant aux subagents, applique les budgets de boucles et les portes de validation humaine."
+safety           = "neutral"
+active_model     = "mistral-large-4-0"
+system_prompt_id = "orchestrateur"
+# Pas d'enabled_tools : l'orchestrateur garde l'outil de délégation aux subagents.
+enabled_skills   = ["protocole-orchestration", "piloter-analyse", "piloter-backend", "piloter-frontend", "checklist-migration"]

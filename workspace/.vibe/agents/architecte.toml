@@ -1,0 +1,9 @@
+# Subagent de l'orchestrateur. Ne délègue pas.
+agent_type       = "subagent"
+display_name     = "Architecte"
+description      = "[Subagent de l'orchestrateur] Met à jour le contrat OpenAPI, rédige les ADR et le plan de tranche d'un module à partir de la spec validée (Java 21 hexagonal, Angular 22 + Pollen, Kubernetes)."
+safety           = "neutral"
+active_model     = "mistral-large-4-0"
+system_prompt_id = "architecte"
+enabled_tools    = ["read_file", "grep", "write_file", "edit", "skill", "todo"]
+enabled_skills   = ["protocole-orchestration", "rediger-adr", "structurer-module-hexagonal", "migrer-servlet-vers-rest"]

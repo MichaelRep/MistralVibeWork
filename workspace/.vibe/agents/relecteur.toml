@@ -1,0 +1,9 @@
+# Subagent de l'orchestrateur. Lecture seule, ne délègue pas.
+agent_type       = "subagent"
+display_name     = "Relecteur"
+description      = "[Subagent de l'orchestrateur] Relit les fichiers modifiés d'une tranche selon la checklist (règles RG-xxx, tests, hexagonal, Pollen, sécurité) et renvoie les problèmes classés par gravité."
+safety           = "safe"
+active_model     = "mistral-large-4-0"
+system_prompt_id = "relecteur"
+enabled_tools    = ["read_file", "grep", "skill"]
+enabled_skills   = ["protocole-orchestration", "checklist-migration", "structurer-module-hexagonal"]

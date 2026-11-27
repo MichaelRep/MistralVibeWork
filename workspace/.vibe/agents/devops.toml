@@ -1,0 +1,17 @@
+# Subagent de l'orchestrateur. Ne délègue pas. Ne déploie jamais.
+agent_type       = "subagent"
+display_name     = "DevOps"
+description      = "[Subagent de l'orchestrateur] Dockerise outil-recette-api et outil-recette-webapp et prépare leurs charts Helm, validés en local (build, lint, template, dry-run) sans jamais déployer."
+safety           = "neutral"
+active_model     = "mistral-medium-3.5"
+system_prompt_id = "devops"
+enabled_tools    = ["read_file", "grep", "write_file", "edit", "bash", "skill", "todo"]
+enabled_skills   = ["protocole-orchestration", "dockeriser-service", "deployer-k8s"]
+
+[tools.bash]
+permission = "never"
+allowlist  = [
+  "docker build", "docker images",
+  "helm lint", "helm template", "kubectl apply --dry-run=client", "kubectl kustomize",
+  "git -C outil-recette-api status", "git -C outil-recette-webapp status",
+]

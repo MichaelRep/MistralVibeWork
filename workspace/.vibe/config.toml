@@ -1,0 +1,47 @@
+# Configuration Mistral Vibe de l'espace de travail C:\Local\Git\
+# Chargée uniquement si le dossier est "trusted". Lancer `vibe` depuis C:\Local\Git\.
+# Les valeurs d'un agent (.vibe/agents/*.toml) priment sur celles-ci.
+# Référence : https://docs.mistral.ai/vibe/code/cli/configuration
+# NB : vérifier les noms de champs sur votre version de Vibe (`vibe --help`, `/config`).
+
+# Un seul agent à lancer : l'orchestrateur, qui délègue aux autres (tous des subagents).
+default_agent = "orchestrateur"
+
+# Délégation. Bornes complémentaires aux budgets de la skill protocole-orchestration.
+enable_subagents = true
+max_concurrent_subagents = 2   # au plus backend + frontend en parallèle
+max_subagents = 16             # subagents vivants en même temps
+
+# Les subagents ne peuvent pas demander d'approbation : les éditions de fichiers doivent
+# être autorisées au niveau de la session, sinon ils resteraient bloqués.
+# Les garde-fous restent : liste bash par agent, et les prompts interdisent
+# d'écrire dans Outil-recette/ et dans le projet de référence.
+[tools.edit]
+permission = "always"
+
+[tools.write_file]
+permission = "always"
+
+# --- Garde-fous bash communs ------------------------------------------------------
+# Les listes fonctionnent par préfixe de commande : on lance tout depuis C:\Local\Git\
+# avec `mvn -f`, `npm --prefix` et `git -C` plutôt qu'avec `cd ... &&`.
+[tools.bash]
+permission = "ask"
+allowlist = [
+  "git -C outil-recette-api status", "git -C outil-recette-api diff", "git -C outil-recette-api log", "git -C outil-recette-api branch",
+  "git -C outil-recette-webapp status", "git -C outil-recette-webapp diff", "git -C outil-recette-webapp log", "git -C outil-recette-webapp branch",
+  "git -C Outil-recette log", "git -C Outil-recette show", "git -C Outil-recette blame",
+  "mvn -f outil-recette-api/pom.xml test", "mvn -f outil-recette-api/pom.xml verify", "mvn -f outil-recette-api/pom.xml -q",
+  "npm --prefix outil-recette-webapp ci", "npm --prefix outil-recette-webapp test", "npm --prefix outil-recette-webapp run",
+]
+denylist = [
+  "git push", "git -C outil-recette-api push", "git -C outil-recette-webapp push", "git -C Outil-recette push",
+  "git reset --hard", "git -C outil-recette-api reset --hard", "git -C outil-recette-webapp reset --hard",
+  "git clean", "git -C outil-recette-api clean", "git -C outil-recette-webapp clean",
+  "git -C Outil-recette commit", "git -C Outil-recette checkout", "git -C Outil-recette reset",
+  "rm -rf", "Remove-Item", "del /s", "rmdir /s", "format",
+  "kubectl apply", "kubectl delete", "kubectl edit", "kubectl patch", "kubectl scale",
+  "helm install", "helm upgrade", "helm uninstall",
+  "docker push", "docker login",
+  "npm publish",
+]
